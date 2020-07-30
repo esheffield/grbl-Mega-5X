@@ -67,38 +67,38 @@
 // COMPILE-TIME ERROR CHECKING OF DEFINE VALUES:
 
 #ifndef HOMING_CYCLE_0
-  #error "Required HOMING_CYCLE_0 not defined."
+#error "Required HOMING_CYCLE_0 not defined."
 #endif
 
 #if defined(PARKING_ENABLE)
-  #if defined(HOMING_FORCE_SET_ORIGIN)
-    #error "HOMING_FORCE_SET_ORIGIN is not supported with PARKING_ENABLE at this time."
-  #endif
+#if defined(HOMING_FORCE_SET_ORIGIN)
+#error "HOMING_FORCE_SET_ORIGIN is not supported with PARKING_ENABLE at this time."
+#endif
 #endif
 
 #if defined(ENABLE_PARKING_OVERRIDE_CONTROL)
-  #if !defined(PARKING_ENABLE)
-    #error "ENABLE_PARKING_OVERRIDE_CONTROL must be enabled with PARKING_ENABLE."
-  #endif
+#if !defined(PARKING_ENABLE)
+#error "ENABLE_PARKING_OVERRIDE_CONTROL must be enabled with PARKING_ENABLE."
+#endif
 #endif
 
 #if defined(SPINDLE_PWM_MIN_VALUE)
-  #if !(SPINDLE_PWM_MIN_VALUE > 0)
-    #error "SPINDLE_PWM_MIN_VALUE must be greater than zero."
-  #endif
+#if !(SPINDLE_PWM_MIN_VALUE > 0)
+#error "SPINDLE_PWM_MIN_VALUE must be greater than zero."
+#endif
 #endif
 
 #if (REPORT_WCO_REFRESH_BUSY_COUNT < REPORT_WCO_REFRESH_IDLE_COUNT)
-  #error "WCO busy refresh is less than idle refresh."
+#error "WCO busy refresh is less than idle refresh."
 #endif
 #if (REPORT_OVR_REFRESH_BUSY_COUNT < REPORT_OVR_REFRESH_IDLE_COUNT)
-  #error "Override busy refresh is less than idle refresh."
+#error "Override busy refresh is less than idle refresh."
 #endif
 #if (REPORT_WCO_REFRESH_IDLE_COUNT < 2)
-  #error "WCO refresh must be greater than one."
+#error "WCO refresh must be greater than one."
 #endif
 #if (REPORT_OVR_REFRESH_IDLE_COUNT < 1)
-  #error "Override refresh must be greater than zero."
+#error "Override refresh must be greater than zero."
 #endif
 
 // ---------------------------------------------------------------------------------------

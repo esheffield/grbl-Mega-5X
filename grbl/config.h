@@ -31,7 +31,6 @@
 #define config_h
 #include "grbl.h" // For Arduino IDE compatibility.
 
-
 // Define CPU pin map and default settings.
 // NOTE: OEMs can avoid the need to maintain/update the defaults.h and cpu_map.h files and use only
 // one configuration file by placing their specific defaults and pin map at the bottom of this file.
@@ -49,11 +48,11 @@
 
 // Axis array index values. Must start with 0 and be continuous.
 #ifdef DEFAULTS_RAMPS_BOARD
-  // 4, 5 & 6 axis support only for RAMPS 1.4 (for the moment :-)...)
-  #define N_AXIS 5            // Number of axes
-  #define N_AXIS_LINEAR 3     // Number of linears axis
+// 4, 5 & 6 axis support only for RAMPS 1.4 (for the moment :-)...)
+#define N_AXIS 5        // Number of axes
+#define N_AXIS_LINEAR 3 // Number of linears axis
 #else
-  #define N_AXIS 3 // Number of axes = 3 if not DEFAULTS_RAMPS_BOARD
+#define N_AXIS 3 // Number of axes = 3 if not DEFAULTS_RAMPS_BOARD
 #endif
 
 #define AXIS_1 0        // Axis indexing value. Must start with 0 and be continuous.
@@ -63,23 +62,23 @@
 #define AXIS_3 2
 #define AXIS_3_NAME 'Z'
 
-#if N_AXIS <3
-  #error "N_AXIS must be >= 3. N_AXIS < 3 is not implemented."
+#if N_AXIS < 3
+#error "N_AXIS must be >= 3. N_AXIS < 3 is not implemented."
 #endif
 #if N_AXIS > 3
-  #define AXIS_4 3
-  #define AXIS_4_NAME 'A' // Letter of axis number 4
+#define AXIS_4 3
+#define AXIS_4_NAME 'A' // Letter of axis number 4
 #endif
 #if N_AXIS > 4
-  #define AXIS_5 4
-  #define AXIS_5_NAME 'B' // Letter of axis number 5
+#define AXIS_5 4
+#define AXIS_5_NAME 'B' // Letter of axis number 5
 #endif
 #if N_AXIS > 5
-  #define AXIS_6 5
-  #define AXIS_6_NAME 'C' // Letter of axis number 6
+#define AXIS_6 5
+#define AXIS_6_NAME 'C' // Letter of axis number 6
 #endif
 #if N_AXIS > 6
-  #error "N_AXIS must be <= 6. N_AXIS > 6 is not implemented."
+#error "N_AXIS must be <= 6. N_AXIS > 6 is not implemented."
 #endif
 
 // Renaming axis doesn't change their number. By default, the status report give axis values in
@@ -91,9 +90,9 @@
 //#define AXIS_NAME_SORT_ORDER {'X', 'Y', 'Z', 'U', 'V', 'W', 'A', 'B', 'C'}
 
 #ifdef SORT_REPORT_BY_AXIS_NAME
-  #ifndef AXIS_NAME_SORT_ORDER
-    #error You must define AXIS_NAME_SORT_ORDER to use SORT_REPORT_BY_AXIS_NAME
-  #endif
+#ifndef AXIS_NAME_SORT_ORDER
+#error You must define AXIS_NAME_SORT_ORDER to use SORT_REPORT_BY_AXIS_NAME
+#endif
 #endif
 
 // By default, Grbl report all values of each axis. When cloning axis with more than one axis with
@@ -102,9 +101,9 @@
 //#define REPORT_VALUE_FOR_AXIS_NAME_ONCE
 
 #ifdef REPORT_VALUE_FOR_AXIS_NAME_ONCE
-  #ifndef SORT_REPORT_BY_AXIS_NAME
-    #error You must define SORT_REPORT_BY_AXIS_NAME to use REPORT_VALUE_FOR_AXIS_NAME_ONCE
-  #endif
+#ifndef SORT_REPORT_BY_AXIS_NAME
+#error You must define SORT_REPORT_BY_AXIS_NAME to use REPORT_VALUE_FOR_AXIS_NAME_ONCE
+#endif
 #endif
 
 // Define realtime command special characters. These characters are 'picked-off' directly from the
@@ -128,18 +127,18 @@
 // #define CMD_CYCLE_START 0x82
 // #define CMD_FEED_HOLD 0x83
 #define CMD_SAFETY_DOOR 0x84
-#define CMD_JOG_CANCEL  0x85
-#define CMD_DEBUG_REPORT 0x86 // Only when DEBUG enabled, sends debug report in '{}' braces.
-#define CMD_FEED_OVR_RESET 0x90         // Restores feed override value to 100%.
+#define CMD_JOG_CANCEL 0x85
+#define CMD_DEBUG_REPORT 0x86   // Only when DEBUG enabled, sends debug report in '{}' braces.
+#define CMD_FEED_OVR_RESET 0x90 // Restores feed override value to 100%.
 #define CMD_FEED_OVR_COARSE_PLUS 0x91
 #define CMD_FEED_OVR_COARSE_MINUS 0x92
-#define CMD_FEED_OVR_FINE_PLUS  0x93
-#define CMD_FEED_OVR_FINE_MINUS  0x94
-#define CMD_RAPID_OVR_RESET 0x95        // Restores rapid override value to 100%.
+#define CMD_FEED_OVR_FINE_PLUS 0x93
+#define CMD_FEED_OVR_FINE_MINUS 0x94
+#define CMD_RAPID_OVR_RESET 0x95 // Restores rapid override value to 100%.
 #define CMD_RAPID_OVR_MEDIUM 0x96
 #define CMD_RAPID_OVR_LOW 0x97
 // #define CMD_RAPID_OVR_EXTRA_LOW 0x98 // *NOT SUPPORTED*
-#define CMD_SPINDLE_OVR_RESET 0x99      // Restores spindle override value to 100%.
+#define CMD_SPINDLE_OVR_RESET 0x99 // Restores spindle override value to 100%.
 #define CMD_SPINDLE_OVR_COARSE_PLUS 0x9A
 #define CMD_SPINDLE_OVR_COARSE_MINUS 0x9B
 #define CMD_SPINDLE_OVR_FINE_PLUS 0x9C
@@ -169,34 +168,34 @@
 // will not be affected by pin sharing.
 // NOTE: Defaults are set for a traditional 3-axis CNC machine. Z-axis first to clear, followed by X & Y.
 #ifdef DEFAULTS_RAMPS_BOARD
-  #if N_AXIS == 4 // 4 axis : homing
-    #define HOMING_CYCLE_0 (1<<AXIS_3) // Home Z axis first to clear workspace.
-    #define HOMING_CYCLE_1 (1<<AXIS_4) // Home 4th axis (A)
-    #define HOMING_CYCLE_2 (1<<AXIS_1) // Home X axis
-    #define HOMING_CYCLE_3 (1<<AXIS_2) // Home Y axis
-  #elif N_AXIS == 5 // 5 axis : homing
-    #define HOMING_CYCLE_0 (1<<AXIS_3) // Home Z axis first to clear workspace.
-    #define HOMING_CYCLE_1 (1<<AXIS_1) // Home X axis
-    #define HOMING_CYCLE_2 (1<<AXIS_2) // Home Y axis
-    //#define HOMING_CYCLE_3 (1<<AXIS_4) // Home 4th axis (A)
-    //#define HOMING_CYCLE_4 (1<<AXIS_5) // Home 5th axis (B)
-  #elif N_AXIS == 6 // 6 axis : homing
-    #define HOMING_CYCLE_0 (1<<AXIS_3) // Home Z axis first to clear workspace.
-    #define HOMING_CYCLE_1 (1<<AXIS_4) // Home 4th axis (A)
-    #define HOMING_CYCLE_2 (1<<AXIS_5) // Home 5th axis (B)
-    #define HOMING_CYCLE_3 (1<<AXIS_6) // Home 6th axis (C)
-    #define HOMING_CYCLE_4 (1<<AXIS_1) // Home X axis
-    #define HOMING_CYCLE_5 (1<<AXIS_2) // Home Y axis
-  #else // Classic 3 axis
-    #define HOMING_CYCLE_0 (1<<AXIS_3) // Home Z axis first to clear workspace.
-    #define HOMING_CYCLE_1 (1<<AXIS_1) // Home X axis
-    #define HOMING_CYCLE_2 (1<<AXIS_2) // Home Y axis
-  #endif
+#if N_AXIS == 4                      // 4 axis : homing
+#define HOMING_CYCLE_0 (1 << AXIS_3) // Home Z axis first to clear workspace.
+#define HOMING_CYCLE_1 (1 << AXIS_4) // Home 4th axis (A)
+#define HOMING_CYCLE_2 (1 << AXIS_1) // Home X axis
+#define HOMING_CYCLE_3 (1 << AXIS_2) // Home Y axis
+#elif N_AXIS == 5                    // 5 axis : homing
+#define HOMING_CYCLE_0 (1 << AXIS_3) // Home Z axis first to clear workspace.
+#define HOMING_CYCLE_1 (1 << AXIS_1) // Home X axis
+#define HOMING_CYCLE_2 (1 << AXIS_2) // Home Y axis
+//#define HOMING_CYCLE_3 (1<<AXIS_4) // Home 4th axis (A)
+//#define HOMING_CYCLE_4 (1<<AXIS_5) // Home 5th axis (B)
+#elif N_AXIS == 6                    // 6 axis : homing
+#define HOMING_CYCLE_0 (1 << AXIS_3) // Home Z axis first to clear workspace.
+#define HOMING_CYCLE_1 (1 << AXIS_4) // Home 4th axis (A)
+#define HOMING_CYCLE_2 (1 << AXIS_5) // Home 5th axis (B)
+#define HOMING_CYCLE_3 (1 << AXIS_6) // Home 6th axis (C)
+#define HOMING_CYCLE_4 (1 << AXIS_1) // Home X axis
+#define HOMING_CYCLE_5 (1 << AXIS_2) // Home Y axis
+#else                                // Classic 3 axis
+#define HOMING_CYCLE_0 (1 << AXIS_3) // Home Z axis first to clear workspace.
+#define HOMING_CYCLE_1 (1 << AXIS_1) // Home X axis
+#define HOMING_CYCLE_2 (1 << AXIS_2) // Home Y axis
+#endif
 #else
-  #define HOMING_CYCLE_0 (1<<AXIS_3)                // REQUIRED: First move Z to clear workspace.
-  #define HOMING_CYCLE_1 ((1<<AXIS_1)|(1<<AXIS_2))  // OPTIONAL: Then move X,Y at the same time.
-  // #define HOMING_CYCLE_2                         // OPTIONAL: Uncomment and add axes mask to enable
-#endif // DEFAULTS_RAMPS_BOARD
+#define HOMING_CYCLE_0 (1 << AXIS_3)                   // REQUIRED: First move Z to clear workspace.
+#define HOMING_CYCLE_1 ((1 << AXIS_1) | (1 << AXIS_2)) // OPTIONAL: Then move X,Y at the same time.
+// #define HOMING_CYCLE_2                         // OPTIONAL: Uncomment and add axes mask to enable
+#endif                                                 // DEFAULTS_RAMPS_BOARD
 
 // NOTE: The following are two examples to setup homing for 2-axis machines.
 // #define HOMING_CYCLE_0 ((1<<AXIS_1)|(1<<AXIS_2))  // NOT COMPATIBLE WITH COREXY: Homes both X-Y in one cycle.
@@ -232,11 +231,11 @@
 // precise this. So, there is likely no need to change these, but you can if you need to here.
 // NOTE: Must be an integer value from 0 to ~4. More than 4 may exhibit round-off errors.
 #define N_DECIMAL_COORDVALUE_INCH 4 // Coordinate or position value in inches
-#define N_DECIMAL_COORDVALUE_MM   3 // Coordinate or position value in mm
-#define N_DECIMAL_RATEVALUE_INCH  1 // Rate or velocity value in in/min
-#define N_DECIMAL_RATEVALUE_MM    0 // Rate or velocity value in mm/min
-#define N_DECIMAL_SETTINGVALUE    3 // Decimals for floating point setting values
-#define N_DECIMAL_RPMVALUE        0 // RPM value in rotations per min.
+#define N_DECIMAL_COORDVALUE_MM 3   // Coordinate or position value in mm
+#define N_DECIMAL_RATEVALUE_INCH 1  // Rate or velocity value in in/min
+#define N_DECIMAL_RATEVALUE_MM 0    // Rate or velocity value in mm/min
+#define N_DECIMAL_SETTINGVALUE 3    // Decimals for floating point setting values
+#define N_DECIMAL_RPMVALUE 0        // RPM value in rotations per min.
 
 // If your machine has two limits switches wired in parallel to one axis, you will need to enable
 // this feature. Since the two switches are sharing a single pin, there is no way for Grbl to tell
@@ -276,7 +275,7 @@
 // NOTE: The top option will mask and invert all control pins. The bottom option is an example of
 // inverting only two control pins, the safety door and reset. See cpu_map.h for other bit definitions.
 // #define INVERT_CONTROL_PIN_MASK CONTROL_MASK // Default disabled. Uncomment to disable.
-// #define INVERT_CONTROL_PIN_MASK ((1<<CONTROL_SAFETY_DOOR_BIT)|(CONTROL_RESET_BIT)) // Default disabled.
+// #define INVERT_CONTROL_PIN_MASK ((1<<CONTROL_SAFETY_DOOR_BIT)|(1<<CONTROL_RESET_BIT)) // Default disabled.
 
 // Inverts select limit pin states based on the following mask. This effects all limit pin functions,
 // such as hard limits and homing. However, this is different from overall invert limits setting.
@@ -286,12 +285,12 @@
 // NOTE: PLEASE DO NOT USE THIS, unless you have a situation that needs it.
 // #define INVERT_LIMIT_PIN_MASK ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)) // Default disabled. Uncomment to enable.
 #ifdef DEFAULTS_RAMPS_BOARD
-  // Enable the following line to inverse logical behaviour (Normaly Open / Normaly Closed)
-  // of some min limit switches attached.
-  //#define INVERT_MIN_LIMIT_PIN_MASK ((1<<AXIS_1) | (1<<AXIS_2) | (1<<AXIS_3))
-  // Enable the following line to inverse logical behaviour (Normaly Open / Normaly Closed)
-  // of some max limit switches attached.
-  //#define INVERT_MAX_LIMIT_PIN_MASK ((1<<AXIS_1) | (1<<AXIS_2) | (1<<AXIS_3))
+// Enable the following line to inverse logical behaviour (Normaly Open / Normaly Closed)
+// of some min limit switches attached.
+//#define INVERT_MIN_LIMIT_PIN_MASK ((1<<AXIS_1) | (1<<AXIS_2) | (1<<AXIS_3))
+// Enable the following line to inverse logical behaviour (Normaly Open / Normaly Closed)
+// of some max limit switches attached.
+//#define INVERT_MAX_LIMIT_PIN_MASK ((1<<AXIS_1) | (1<<AXIS_2) | (1<<AXIS_3))
 #endif
 
 // Inverts the spindle enable pin from low-disabled/high-enabled to low-enabled/high-disabled. Useful
@@ -326,22 +325,22 @@
 // Configure rapid, feed, and spindle override settings. These values define the max and min
 // allowable override values and the coarse and fine increments per command received. Please
 // note the allowable values in the descriptions following each define.
-#define DEFAULT_FEED_OVERRIDE           100 // 100%. Don't change this value.
-#define MAX_FEED_RATE_OVERRIDE          200 // Percent of programmed feed rate (100-255). Usually 120% or 200%
-#define MIN_FEED_RATE_OVERRIDE           10 // Percent of programmed feed rate (1-100). Usually 50% or 1%
-#define FEED_OVERRIDE_COARSE_INCREMENT   10 // (1-99). Usually 10%.
-#define FEED_OVERRIDE_FINE_INCREMENT      1 // (1-99). Usually 1%.
+#define DEFAULT_FEED_OVERRIDE 100         // 100%. Don't change this value.
+#define MAX_FEED_RATE_OVERRIDE 200        // Percent of programmed feed rate (100-255). Usually 120% or 200%
+#define MIN_FEED_RATE_OVERRIDE 10         // Percent of programmed feed rate (1-100). Usually 50% or 1%
+#define FEED_OVERRIDE_COARSE_INCREMENT 10 // (1-99). Usually 10%.
+#define FEED_OVERRIDE_FINE_INCREMENT 1    // (1-99). Usually 1%.
 
-#define DEFAULT_RAPID_OVERRIDE  100 // 100%. Don't change this value.
-#define RAPID_OVERRIDE_MEDIUM    50 // Percent of rapid (1-99). Usually 50%.
-#define RAPID_OVERRIDE_LOW       25 // Percent of rapid (1-99). Usually 25%.
+#define DEFAULT_RAPID_OVERRIDE 100 // 100%. Don't change this value.
+#define RAPID_OVERRIDE_MEDIUM 50   // Percent of rapid (1-99). Usually 50%.
+#define RAPID_OVERRIDE_LOW 25      // Percent of rapid (1-99). Usually 25%.
 // #define RAPID_OVERRIDE_EXTRA_LOW 5 // *NOT SUPPORTED* Percent of rapid (1-99). Usually 5%.
 
-#define DEFAULT_SPINDLE_SPEED_OVERRIDE    100 // 100%. Don't change this value.
-#define MAX_SPINDLE_SPEED_OVERRIDE        200 // Percent of programmed spindle speed (100-255). Usually 200%.
-#define MIN_SPINDLE_SPEED_OVERRIDE         10 // Percent of programmed spindle speed (1-100). Usually 10%.
-#define SPINDLE_OVERRIDE_COARSE_INCREMENT  10 // (1-99). Usually 10%.
-#define SPINDLE_OVERRIDE_FINE_INCREMENT     1 // (1-99). Usually 1%.
+#define DEFAULT_SPINDLE_SPEED_OVERRIDE 100   // 100%. Don't change this value.
+#define MAX_SPINDLE_SPEED_OVERRIDE 200       // Percent of programmed spindle speed (100-255). Usually 200%.
+#define MIN_SPINDLE_SPEED_OVERRIDE 10        // Percent of programmed spindle speed (1-100). Usually 10%.
+#define SPINDLE_OVERRIDE_COARSE_INCREMENT 10 // (1-99). Usually 10%.
+#define SPINDLE_OVERRIDE_FINE_INCREMENT 1    // (1-99). Usually 1%.
 
 // When a M2 or M30 program end command is executed, most g-code states are restored to their defaults.
 // This compile-time option includes the restoring of the feed, rapid, and spindle speed override values
@@ -354,12 +353,12 @@
 // be sent without potential performance issues.
 // NOTE: The options below are here only provide a way to disable certain data fields if a unique
 // situation demands it, but be aware GUIs may depend on this data. If disabled, it may not be compatible.
-#define REPORT_FIELD_BUFFER_STATE // Default enabled. Comment to disable.
-#define REPORT_FIELD_PIN_STATE // Default enabled. Comment to disable.
+#define REPORT_FIELD_BUFFER_STATE       // Default enabled. Comment to disable.
+#define REPORT_FIELD_PIN_STATE          // Default enabled. Comment to disable.
 #define REPORT_FIELD_CURRENT_FEED_SPEED // Default enabled. Comment to disable.
-#define REPORT_FIELD_WORK_COORD_OFFSET // Default enabled. Comment to disable.
-#define REPORT_FIELD_OVERRIDES // Default enabled. Comment to disable.
-#define REPORT_FIELD_LINE_NUMBERS // Default enabled. Comment to disable.
+#define REPORT_FIELD_WORK_COORD_OFFSET  // Default enabled. Comment to disable.
+#define REPORT_FIELD_OVERRIDES          // Default enabled. Comment to disable.
+#define REPORT_FIELD_LINE_NUMBERS       // Default enabled. Comment to disable.
 
 // Some status report data isn't necessary for realtime, only intermittently, because the values don't
 // change often. The following macros configures how many times a status report needs to be called before
@@ -370,10 +369,10 @@
 // refreshes more often when its not doing anything important. With a good GUI, this data doesn't need
 // to be refreshed very often, on the order of a several seconds.
 // NOTE: WCO refresh must be 2 or greater. OVR refresh must be 1 or greater.
-#define REPORT_OVR_REFRESH_BUSY_COUNT 20  // (1-255)
-#define REPORT_OVR_REFRESH_IDLE_COUNT 10  // (1-255) Must be less than or equal to the busy count
-#define REPORT_WCO_REFRESH_BUSY_COUNT 30  // (2-255)
-#define REPORT_WCO_REFRESH_IDLE_COUNT 10  // (2-255) Must be less than or equal to the busy count
+#define REPORT_OVR_REFRESH_BUSY_COUNT 20 // (1-255)
+#define REPORT_OVR_REFRESH_IDLE_COUNT 10 // (1-255) Must be less than or equal to the busy count
+#define REPORT_WCO_REFRESH_BUSY_COUNT 30 // (2-255)
+#define REPORT_WCO_REFRESH_IDLE_COUNT 10 // (2-255) Must be less than or equal to the busy count
 
 // The temporal resolution of the acceleration management subsystem. A higher number gives smoother
 // acceleration, particularly noticeable on machines that run at very high feedrates, but may negatively
@@ -389,7 +388,7 @@
 // frequencies below 10kHz, where the aliasing between axes of multi-axis motions can cause audible
 // noise and shake your machine. At even lower step frequencies, AMASS adapts and provides even better
 // step smoothing. See stepper.c for more details on the AMASS system works.
-#define ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING  // Default enabled. Comment to disable.
+#define ADAPTIVE_MULTI_AXIS_STEP_SMOOTHING // Default enabled. Comment to disable.
 
 // Sets the maximum step rate allowed to be written as a Grbl setting. This option enables an error
 // check in the settings module to prevent settings values that will exceed this limitation. The maximum
@@ -648,11 +647,11 @@
 // #define PARKING_ENABLE  // Default disabled. Uncomment to enable
 
 // Configure options for the parking motion, if enabled.
-#define PARKING_AXIS AXIS_3 // Define which axis that performs the parking motion
-#define PARKING_TARGET -5.0 // Parking axis target. In mm, as machine coordinate [-max_travel,0].
-#define PARKING_RATE 500.0 // Parking fast rate after pull-out in mm/min.
-#define PARKING_PULLOUT_RATE 100.0 // Pull-out/plunge slow feed rate in mm/min.
-#define PARKING_PULLOUT_INCREMENT 5.0 // Spindle pull-out and plunge distance in mm. Incremental distance.
+#define PARKING_AXIS AXIS_3           // Define which axis that performs the parking motion
+#define PARKING_TARGET -5.0           // Parking axis target. In mm, as machine coordinate [-max_travel,0].
+#define PARKING_RATE 500.0            // Parking fast rate after pull-out in mm/min.
+#define PARKING_PULLOUT_RATE 100.0    // Pull-out/plunge slow feed rate in mm/min.
+#define PARKING_PULLOUT_INCREMENT 5.0 // Spindle pull-out and plunge distance in mm. Incremental distance. \
                                       // Must be positive value or equal to zero.
 
 // Enables a special set of M-code commands that enables and disables the parking motion.
@@ -691,21 +690,20 @@
 // the 'fit_nonlinear_spindle.py' script solution. Used only when ENABLE_PIECEWISE_LINEAR_SPINDLE
 // is enabled. Make sure the constant values are exactly the same as the script solution.
 // NOTE: When N_PIECES < 4, unused RPM_LINE and RPM_POINT defines are not required and omitted.
-#define N_PIECES 4  // Integer (1-4). Number of piecewise lines used in script solution.
-#define RPM_MAX  11686.4  // Max RPM of model. $30 > RPM_MAX will be limited to RPM_MAX.
-#define RPM_MIN  202.5    // Min RPM of model. $31 < RPM_MIN will be limited to RPM_MIN.
-#define RPM_POINT12  6145.4  // Used N_PIECES >=2. Junction point between lines 1 and 2.
-#define RPM_POINT23  9627.8  // Used N_PIECES >=3. Junction point between lines 2 and 3.
-#define RPM_POINT34  10813.9 // Used N_PIECES = 4. Junction point between lines 3 and 4.
-#define RPM_LINE_A1  3.197101e-03  // Used N_PIECES >=1. A and B constants of line 1.
-#define RPM_LINE_B1  -3.526076e-1
-#define RPM_LINE_A2  1.722950e-2   // Used N_PIECES >=2. A and B constants of line 2.
-#define RPM_LINE_B2  8.588176e+01
-#define RPM_LINE_A3  5.901518e-02  // Used N_PIECES >=3. A and B constants of line 3.
-#define RPM_LINE_B3  4.881851e+02
-#define RPM_LINE_A4  1.203413e-01  // Used N_PIECES = 4. A and B constants of line 4.
-#define RPM_LINE_B4  1.151360e+03
-
+#define N_PIECES 4               // Integer (1-4). Number of piecewise lines used in script solution.
+#define RPM_MAX 11686.4          // Max RPM of model. $30 > RPM_MAX will be limited to RPM_MAX.
+#define RPM_MIN 202.5            // Min RPM of model. $31 < RPM_MIN will be limited to RPM_MIN.
+#define RPM_POINT12 6145.4       // Used N_PIECES >=2. Junction point between lines 1 and 2.
+#define RPM_POINT23 9627.8       // Used N_PIECES >=3. Junction point between lines 2 and 3.
+#define RPM_POINT34 10813.9      // Used N_PIECES = 4. Junction point between lines 3 and 4.
+#define RPM_LINE_A1 3.197101e-03 // Used N_PIECES >=1. A and B constants of line 1.
+#define RPM_LINE_B1 -3.526076e-1
+#define RPM_LINE_A2 1.722950e-2 // Used N_PIECES >=2. A and B constants of line 2.
+#define RPM_LINE_B2 8.588176e+01
+#define RPM_LINE_A3 5.901518e-02 // Used N_PIECES >=3. A and B constants of line 3.
+#define RPM_LINE_B3 4.881851e+02
+#define RPM_LINE_A4 1.203413e-01 // Used N_PIECES = 4. A and B constants of line 4.
+#define RPM_LINE_B4 1.151360e+03
 
 /* ---------------------------------------------------------------------------------------
    OEM Single File Configuration Option
@@ -719,6 +717,5 @@
 // Paste CPU_MAP definitions here.
 
 // Paste default settings definitions here.
-
 
 #endif
